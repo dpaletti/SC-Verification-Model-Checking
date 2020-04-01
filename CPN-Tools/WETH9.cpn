@@ -167,7 +167,7 @@ userAllowances: UserAllowances;</layout>
             <record>
               <recordfield>
                 <id>balanceOwner</id>
-                <id>BalanceOwner</id>
+                <id>Id</id>
               </recordfield>
               <recordfield>
                 <id>balanceValue</id>
@@ -175,7 +175,7 @@ userAllowances: UserAllowances;</layout>
               </recordfield>
             </record>
             <layout>colset BalanceOfElement = record 
-balanceOwner: BalanceOwner *
+balanceOwner: Id *
 balanceValue: BalanceValue;</layout>
           </color>
           <color id="ID1412329789">
@@ -235,18 +235,22 @@ id: Id *
 wad: Wad;</layout>
           </color>
           <color id="ID1413463759">
-            <id>AllowanceTransfer</id>
+            <id>Save</id>
             <record>
+              <recordfield>
+                <id>balanceOf</id>
+                <id>BalanceOf</id>
+              </recordfield>
               <recordfield>
                 <id>allowance</id>
                 <id>Allowance</id>
               </recordfield>
               <recordfield>
-                <id>id</id>
+                <id>src</id>
                 <id>Id</id>
               </recordfield>
               <recordfield>
-                <id>src</id>
+                <id>dst</id>
                 <id>Id</id>
               </recordfield>
               <recordfield>
@@ -254,10 +258,11 @@ wad: Wad;</layout>
                 <id>Wad</id>
               </recordfield>
             </record>
-            <layout>colset AllowanceTransfer = record
+            <layout>colset Save = record
+balanceOf: BalanceOf *
 allowance: Allowance *
-id : Id *
 src: Id *
+dst: Id*
 wad: Wad;</layout>
           </color>
         </block>
@@ -354,9 +359,40 @@ wad: Wad;</layout>
             <id>account</id>
             <layout>var account: Account;</layout>
           </var>
+          <var id="ID1414203260">
+            <type>
+              <id>Save</id>
+            </type>
+            <id>save</id>
+            <layout>var save: Save;</layout>
+          </var>
         </block>
         <block id="ID1412323967">
           <id>Custom Vals</id>
+          <ml id="ID1414456136">val init_weth9 = 1`{balanceOf = 
+([{balanceOwner = 0, balanceValue = 10}, 
+{balanceOwner = 1, balanceValue = 20}]),
+allowance = 
+([{allower = 0, userAllowances = 
+[{allowed = 0, allowanceValue = ~1},
+{allowed = 1, allowanceValue = 20}]},
+{allower = 1, userAllowances = 
+[{allowed = 0, allowanceValue = 2},
+{allowed = 1, allowanceValue = ~1}]}])};
+            <layout>val init_weth9 = 1`{balanceOf = 
+([{balanceOwner = 0, balanceValue = 10}, 
+{balanceOwner = 1, balanceValue = 20}]),
+allowance = 
+([{allower = 0, userAllowances = 
+[{allowed = 0, allowanceValue = ~1},
+{allowed = 1, allowanceValue = 20}]},
+{allower = 1, userAllowances = 
+[{allowed = 0, allowanceValue = 2},
+{allowed = 1, allowanceValue = ~1}]}])};</layout>
+          </ml>
+          <ml id="ID1414405244">val init_account = 1`{ethBalance = 10.0, id = 0};
+            <layout>val init_account = 1`{ethBalance = 10.0, id = 0};</layout>
+          </ml>
           <ml id="ID1413224383">val init_dst = 1`(1:Id);
             <layout>val init_dst = 1`(1:Id);</layout>
           </ml>
@@ -378,6 +414,11 @@ wad: Wad;</layout>
         </block>
         <block id="ID1414144884">
           <id>Custom Functions</id>
+          <ml id="ID1414230245">fun getBalanceValue (balanceOf: BalanceOf, id) = 
+#balanceValue (List.nth(balanceOf, id))
+            <layout>fun getBalanceValue (balanceOf: BalanceOf, id) = 
+#balanceValue (List.nth(balanceOf, id))</layout>
+          </ml>
           <ml id="ID1414169505">fun storeAtIndex ([], valIns, idx) = 
   if idx = 0 then
     [valIns]
@@ -418,21 +459,49 @@ getAllowanceValueHelper(getUserAllowances(allowance, allower), allowed)</layout>
             <layout>fun delete (item, list) = List.filter(fn x =&gt; x &lt;&gt; item) list</layout>
           </ml>
           <ml id="ID1414167979">fun updateAllowance (allowance: Allowance, allower, allowed, wad: Wad): Allowance =
+if allowed  &lt; length(getUserAllowances(allowance, allower))
+then
 storeAtIndex(delete(List.nth(allowance, allower), allowance), {allower = allower,
 userAllowances = storeAtIndex (delete(
 List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allowance, allower)),
  {allowed = allowed, allowanceValue = wad}:UserAllowancesElement , allowed)}: AllowanceElement, allower)
+else
+storeAtIndex(delete(List.nth(allowance, allower), allowance), {allower = allower,
+userAllowances = storeAtIndex (getUserAllowances(allowance, allower),
+ {allowed = allowed, allowanceValue = wad}:UserAllowancesElement , allowed)}: AllowanceElement, allower)
             <layout>fun updateAllowance (allowance: Allowance, allower, allowed, wad: Wad): Allowance =
+if allowed  &lt; length(getUserAllowances(allowance, allower))
+then
 storeAtIndex(delete(List.nth(allowance, allower), allowance), {allower = allower,
 userAllowances = storeAtIndex (delete(
 List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allowance, allower)),
+ {allowed = allowed, allowanceValue = wad}:UserAllowancesElement , allowed)}: AllowanceElement, allower)
+else
+storeAtIndex(delete(List.nth(allowance, allower), allowance), {allower = allower,
+userAllowances = storeAtIndex (getUserAllowances(allowance, allower),
  {allowed = allowed, allowanceValue = wad}:UserAllowancesElement , allowed)}: AllowanceElement, allower)</layout>
+          </ml>
+          <ml id="ID1414251626">fun updateBalance( balanceOf: BalanceOf,  id,  wad) =
+storeAtIndex(delete(List.nth(balanceOf, id), balanceOf), 
+{balanceOwner = id, 
+balanceValue = wad}, id)
+            <layout>fun updateBalance( balanceOf: BalanceOf,  id,  wad) =
+storeAtIndex(delete(List.nth(balanceOf, id), balanceOf), 
+{balanceOwner = id, 
+balanceValue = wad}, id)</layout>
+          </ml>
+          <ml id="ID1414264291">fun moveWad(balanceOf: BalanceOf, src, dst, wad) =
+updateBalance(updateBalance(balanceOf, src, getBalanceValue(balanceOf, src) -wad),
+dst, getBalanceValue(balanceOf, dst) + wad)
+            <layout>fun moveWad(balanceOf: BalanceOf, src, dst, wad) =
+updateBalance(updateBalance(balanceOf, src, getBalanceValue(balanceOf, src) -wad),
+dst, getBalanceValue(balanceOf, dst) + wad)</layout>
           </ml>
         </block>
       </block>
     </globbox>
     <page id="ID6">
-      <pageattr name="WETH9_approve2"/>
+      <pageattr name="WETH9"/>
       <place id="ID1412324194">
         <posattr x="378.000000"
                  y="236.000000"/>
@@ -457,8 +526,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1412324195">
-          <posattr x="424.500000"
-                   y="260.000000"/>
+          <posattr x="400.500000"
+                   y="204.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -471,7 +540,7 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 version="4.0.1">WETH9</text>
         </type>
         <initmark id="ID1412324196">
-          <posattr x="434.000000"
+          <posattr x="435.500000"
                    y="260.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -482,7 +551,7 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">init_weth9</text>
         </initmark>
       </place>
       <place id="ID1412323339">
@@ -503,14 +572,14 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                y="0.000000"/>
         <marking x="0.000000"
                  y="0.000000"
-                 hidden="false">
+                 hidden="true">
           <snap snap_id="0"
                 anchor.horizontal="0"
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1412323340">
-          <posattr x="-185.500000"
-                   y="268.000000"/>
+          <posattr x="-225.000000"
+                   y="203.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -523,7 +592,7 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 version="4.0.1">Account</text>
         </type>
         <initmark id="ID1412323341">
-          <posattr x="-153.000000"
+          <posattr x="-147.000000"
                    y="260.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -534,7 +603,7 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">init_account</text>
         </initmark>
       </place>
       <trans id="ID1412980105"
@@ -553,7 +622,7 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
         <box w="72.000000"
              h="40.000000"/>
         <subst subpage="ID1412980115"
-               portsock="(ID1412980191,ID1412324194)(ID1412980197,ID1412323339)">
+               portsock="(ID1412980197,ID1412323339)(ID1412980191,ID1412324194)">
           <subpageinfo id="ID1412980264"
                        name="approve">
             <posattr x="55.000000"
@@ -568,8 +637,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                       bold="false"/>
           </subpageinfo>
         </subst>
-        <binding x="7.200000"
-                 y="-3.000000"/>
+        <binding x="10.200000"
+                 y="-2.000000"/>
         <cond id="ID1412980106">
           <posattr x="10.000000"
                    y="347.000000"/>
@@ -629,8 +698,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
       </trans>
       <trans id="ID1413176756"
              explicit="false">
-        <posattr x="53.068500"
-                 y="-33.100000"/>
+        <posattr x="61.000000"
+                 y="157.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -646,8 +715,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                portsock="(ID1413176832,ID1412324194)(ID1413176839,ID1412323339)">
           <subpageinfo id="ID1413176897"
                        name="transferFrom">
-            <posattr x="53.068500"
-                     y="-57.100000"/>
+            <posattr x="61.000000"
+                     y="133.000000"/>
             <fillattr colour="White"
                       pattern="Solid"
                       filled="false"/>
@@ -661,8 +730,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
         <binding x="7.200000"
                  y="-3.000000"/>
         <cond id="ID1413176757">
-          <posattr x="-4.931500"
-                   y="-2.100000"/>
+          <posattr x="3.000000"
+                   y="188.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -675,8 +744,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 version="4.0.1"/>
         </cond>
         <time id="ID1413176758">
-          <posattr x="116.568500"
-                   y="-2.100000"/>
+          <posattr x="124.500000"
+                   y="188.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -689,8 +758,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 version="4.0.1"/>
         </time>
         <code id="ID1413176759">
-          <posattr x="136.568500"
-                   y="-85.100000"/>
+          <posattr x="144.500000"
+                   y="105.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -703,8 +772,8 @@ List.nth(getUserAllowances(allowance, allower), allowed), getUserAllowances(allo
                 version="4.0.1"/>
         </code>
         <priority id="ID1413176761">
-          <posattr x="-33.931500"
-                   y="-64.100000"/>
+          <posattr x="-26.000000"
+                   y="126.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -1445,7 +1514,7 @@ WETH9_approve2&apos;Sender 1: empty</text>
              h="40.000000"/>
         <binding x="7.200000"
                  y="-3.000000"/>
-        <cond id="ID1412980142">
+        <cond id="ID1414578998">
           <posattr x="-283.000000"
                    y="134.000000"/>
           <fillattr colour="White"
@@ -1768,8 +1837,8 @@ WETH9_approve2&apos;Sender 1: empty</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1412980166">
-          <posattr x="161.000000"
-                   y="-337.000000"/>
+          <posattr x="175.000000"
+                   y="-299.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -2364,8 +2433,8 @@ account</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1412980202">
-          <posattr x="-219.000000"
-                   y="291.000000"/>
+          <posattr x="-400.000000"
+                   y="158.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -2412,7 +2481,7 @@ else 1`{id = id, ethBalance= ethBalance - gas}</text>
         </bendpoint>
         <annot id="ID1412980204">
           <posattr x="-191.500000"
-                   y="132.000000"/>
+                   y="170.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -2482,7 +2551,7 @@ else 1`{id = id, ethBalance= ethBalance - gas}</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1412980206">
-          <posattr x="-8.000000"
+          <posattr x="-99.000000"
                    y="-430.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -2494,11 +2563,7 @@ else 1`{id = id, ethBalance= ethBalance - gas}</text>
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1">1`{balanceOf = balanceOf, 
- allowance = [{
-allower = id,
-userAllowances = [{
-allowed = guy, 
-allowanceValue = wad}]}]}</text>
+ allowance = updateAllowance(allowance, id, guy, wad)}</text>
         </annot>
       </arc>
       <constraints/>
@@ -3166,7 +3231,7 @@ allowanceValue = wad}]}]}</text>
                   type="Solid"/>
         <textattr colour="Black"
                   bold="false"/>
-        <text>AllowanceTransfer</text>
+        <text>AfterAllowance</text>
         <ellipse w="130.000000"
                  h="40.000000"/>
         <token x="-10.000000"
@@ -3179,7 +3244,7 @@ allowanceValue = wad}]}]}</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1413437916">
-          <posattr x="105.500000"
+          <posattr x="63.500000"
                    y="-695.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -3190,7 +3255,7 @@ allowanceValue = wad}]}]}</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">AllowanceTransfer</text>
+                version="4.0.1">Save</text>
         </type>
         <initmark id="ID1413437917">
           <posattr x="80.000000"
@@ -3577,6 +3642,80 @@ allowanceValue = wad}]}]}</text>
                 version="4.0.1"/>
         </priority>
       </trans>
+      <trans id="ID1414203649"
+             explicit="false">
+        <posattr x="0.000000"
+                 y="-798.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Save</text>
+        <box w="60.000000"
+             h="40.000000"/>
+        <binding x="7.200000"
+                 y="-3.000000"/>
+        <cond id="ID1414203650">
+          <posattr x="-39.000000"
+                   y="-767.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </cond>
+        <time id="ID1414203651">
+          <posattr x="44.500000"
+                   y="-767.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </time>
+        <code id="ID1414203652">
+          <posattr x="64.500000"
+                   y="-850.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </code>
+        <priority id="ID1414203654">
+          <posattr x="-68.000000"
+                   y="-829.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </priority>
+      </trans>
       <arc id="ID1413176812"
            orientation="TtoP"
            order="1">
@@ -3931,8 +4070,8 @@ weth9</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1413176836">
-          <posattr x="40.000000"
-                   y="94.000000"/>
+          <posattr x="70.000000"
+                   y="89.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -3942,7 +4081,7 @@ weth9</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">if (#balanceValue (List.nth(balanceOf, id))) &lt; wad
+                version="4.0.1">if getBalanceValue(balanceOf, id) &lt; wad
 then 1`{balanceOf = balanceOf,
 allowance = allowance}
 else empty</text>
@@ -4169,8 +4308,8 @@ else empty</text>
         <transend idref="ID1413176798"/>
         <placeend idref="ID1413317430"/>
         <annot id="ID1413320384">
-          <posattr x="374.500000"
-                   y="-393.000000"/>
+          <posattr x="344.500000"
+                   y="-396.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -4180,7 +4319,7 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">if (#balanceValue (List.nth(balanceOf, id))) &gt;= wad
+                version="4.0.1">if getBalanceValue(balanceOf, id) &gt;= wad
 then 1`{allowance = allowance,
                balanceOf = balanceOf,
                 id = id,
@@ -4329,8 +4468,8 @@ else empty</text>
         </bendpoint>
         <bendpoint id="ID1413805601"
                    serial="3">
-          <posattr x="533.562500"
-                   y="238.500000"/>
+          <posattr x="546.000000"
+                   y="236.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -4341,8 +4480,8 @@ else empty</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1413805598">
-          <posattr x="441.000000"
-                   y="-655.000000"/>
+          <posattr x="393.000000"
+                   y="-669.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -4352,8 +4491,10 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">if src &lt;&gt; (#id transfer) andalso 
-getAllowanceValue(#allowance transfer, src, #id transfer)  &lt;&gt; ~1 andalso
+                version="4.0.1">if src &lt;&gt; (#id transfer) 
+andalso 
+getAllowanceValue(#allowance transfer, src, #id transfer)  &lt;&gt; ~1 
+andalso
 getAllowanceValue(#allowance transfer, src, #id transfer) &lt; #wad transfer
 then
 1`{balanceOf = balanceOf,
@@ -4424,8 +4565,8 @@ else empty</text>
         <transend idref="ID1413335298"/>
         <placeend idref="ID1413437915"/>
         <annot id="ID1413476042">
-          <posattr x="-188.500000"
-                   y="-578.000000"/>
+          <posattr x="-247.000000"
+                   y="-591.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -4435,17 +4576,135 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">if src &lt;&gt; (#id transfer) andalso 
+                version="4.0.1">if src &lt;&gt; (#id transfer) 
+andalso 
 getAllowanceValue(#allowance transfer, src, #id transfer) 
- &lt;&gt; ~1 andalso
-getAllowanceValue(#allowance transfer, src, #id transfer) 
+ &lt;&gt; ~1
+then
+if getAllowanceValue(#allowance transfer, src, #id transfer) 
 &gt;= #wad transfer
 then
-1`{allowance = #allowance transfer , 
-id = #id transfer,
+1`{
+balanceOf = balanceOf,
+allowance = updateAllowance(#allowance transfer, 
+src, #id transfer,
+getAllowanceValue(#allowance transfer, src, #id transfer) - #wad transfer) , 
 src = src,
+dst = dst,
 wad = #wad transfer}
-else empty</text>
+else empty
+else
+1`{
+balanceOf = balanceOf,
+allowance = #allowance transfer,
+src = src,
+dst = dst,
+wad = #wad transfer}</text>
+        </annot>
+      </arc>
+      <arc id="ID1414204467"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1414203649"/>
+        <placeend idref="ID1413437915"/>
+        <annot id="ID1414204468">
+          <posattr x="19.000000"
+                   y="-735.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">save</text>
+        </annot>
+      </arc>
+      <arc id="ID1414209485"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1414203649"/>
+        <placeend idref="ID1413176832"/>
+        <bendpoint id="ID1414209487"
+                   serial="1">
+          <posattr x="630.000000"
+                   y="-798.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <bendpoint id="ID1414209489"
+                   serial="2">
+          <posattr x="630.000000"
+                   y="279.742187"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <bendpoint id="ID1414209490"
+                   serial="3">
+          <posattr x="378.000000"
+                   y="279.742187"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1414209486">
+          <posattr x="374.000000"
+                   y="-823.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">1`{
+balanceOf = moveWad(#balanceOf save, #src save, #dst save, #wad save), 
+allowance = #allowance save}</text>
         </annot>
       </arc>
       <constraints/>
@@ -4703,14 +4962,14 @@ else empty</text>
     </options>
     <binders>
       <cpnbinder id="ID2222"
-                 x="351"
-                 y="35"
-                 width="829"
-                 height="600">
+                 x="358"
+                 y="48"
+                 width="691"
+                 height="534">
         <sheets>
           <cpnsheet id="ID2215"
-                    panx="-123.342500"
-                    pany="-56.000000"
+                    panx="-317.870000"
+                    pany="95.078750"
                     zoom="1.000000"
                     instance="ID2149">
             <zorder>
@@ -4718,8 +4977,8 @@ else empty</text>
             </zorder>
           </cpnsheet>
           <cpnsheet id="ID1412984385"
-                    panx="-431.000000"
-                    pany="-594.000000"
+                    panx="70.542969"
+                    pany="45.103906"
                     zoom="1.000000"
                     instance="ID1412980265">
             <zorder>
@@ -4727,9 +4986,9 @@ else empty</text>
             </zorder>
           </cpnsheet>
           <cpnsheet id="ID1413185317"
-                    panx="-172.140625"
-                    pany="-672.234375"
-                    zoom="1.000000"
+                    panx="-32.222504"
+                    pany="-79.793686"
+                    zoom="0.330000"
                     instance="ID1413176898">
             <zorder>
               <position value="0"/>
@@ -4737,8 +4996,8 @@ else empty</text>
           </cpnsheet>
         </sheets>
         <zorder>
-          <position value="0"/>
           <position value="2"/>
+          <position value="0"/>
           <position value="1"/>
         </zorder>
       </cpnbinder>
@@ -4809,14 +5068,16 @@ else empty</text>
           <IndexNode expanded="false"/>
         </IndexNode>
       </IndexNode>
-      <IndexNode expanded="true"/>
       <IndexNode expanded="false">
+        <IndexNode expanded="false"/>
+      </IndexNode>
+      <IndexNode expanded="true">
         <IndexNode expanded="false">
           <IndexNode expanded="true"/>
           <IndexNode expanded="true"/>
           <IndexNode expanded="true"/>
         </IndexNode>
-        <IndexNode expanded="true">
+        <IndexNode expanded="false">
           <IndexNode expanded="false"/>
           <IndexNode expanded="true"/>
           <IndexNode expanded="false"/>
@@ -4825,7 +5086,7 @@ else empty</text>
           <IndexNode expanded="false"/>
           <IndexNode expanded="false"/>
         </IndexNode>
-        <IndexNode expanded="true">
+        <IndexNode expanded="false">
           <IndexNode expanded="true">
             <IndexNode expanded="true"/>
             <IndexNode expanded="false"/>
@@ -4845,29 +5106,6 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
           </IndexNode>
-          <IndexNode expanded="false">
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-          </IndexNode>
-          <IndexNode expanded="false">
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-          </IndexNode>
           <IndexNode expanded="true">
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
@@ -4875,6 +5113,35 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+          </IndexNode>
+          <IndexNode expanded="false">
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+          </IndexNode>
+          <IndexNode expanded="false">
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
           </IndexNode>
         </IndexNode>
       </IndexNode>
