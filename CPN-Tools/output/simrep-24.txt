@@ -1,0 +1,6 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid.cpn
+Report generated: Thu Apr  2 11:26:26 2020
+
+1	0	SetEntries @ (1:Join)
+ - value = 15

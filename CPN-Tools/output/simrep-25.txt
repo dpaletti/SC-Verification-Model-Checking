@@ -1,0 +1,27 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid.cpn
+Report generated: Thu Apr  2 11:27:12 2020
+
+1	0	SetEntries @ (1:Join)
+ - value = 150
+2	0	PayGas @ (1:Join)
+ - account = {balance=100.0,id="Deleuze"}
+ - gas = 5.0
+3	0	GasANDValue_Check @ (1:Join)
+ - pyramid = {master="Spinoza",memberQueue=["Guattari","Simondon","Virilio"],queueFront=0}
+ - entries = 1
+ - account_pg = {balance=95.0,id="Deleuze"}
+4	0	QueueUpdateLoop @ (1:Join)
+ - memberQueue = ["Guattari","Simondon","Virilio"]
+ - queueFront = 0
+ - id = "Deleuze"
+ - entries_gavc = 1
+5	0	Remainder @ (1:Join)
+ - balance = 95.0
+ - value_SE = 150
+ - entriesFinney = 100
+ - id_QUL = "Deleuze"
+6	0	Save @ (1:Join)
+ - queueFront_QUL = 0
+ - memberQueue_QUL = ["Guattari","Simondon","Virilio","Deleuze"]
+ - master = "Spinoza"

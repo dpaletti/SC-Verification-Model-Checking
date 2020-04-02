@@ -1,0 +1,144 @@
+CPN Tools state space report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid.cpn
+Report generated: Thu Apr  2 11:30:16 2020
+
+
+ Statistics
+------------------------------------------------------------------------
+
+  State Space
+     Nodes:  9
+     Arcs:   10
+     Secs:   0
+     Status: Full
+
+  Scc Graph
+     Nodes:  9
+     Arcs:   10
+     Secs:   0
+
+
+ Boundedness Properties
+------------------------------------------------------------------------
+
+  Best Integer Bounds
+                             Upper      Lower
+     Pyramid'Account 1       1          0
+     Pyramid'Pyramid 1       1          0
+     Pyramid'transferTargets 1
+                             1          0
+     method_Join'Account_PG 1
+                             1          0
+     method_Join'Balance 1   1          0
+     method_Join'Entries 1   1          0
+     method_Join'Entries_GAVC 1
+                             1          0
+     method_Join'Entries_QUL 1
+                             1          0
+     method_Join'Gas 1       1          0
+     method_Join'Id 1        1          0
+     method_Join'Id_QUL 1    1          0
+     method_Join'Master 1    1          0
+     method_Join'MemberQueue 1
+                             1          0
+     method_Join'QueueFront 1
+                             1          0
+     method_Join'QueueFront_QUL 1
+                             1          0
+     method_Join'Value 1     1          0
+     method_Join'Value_SE 1  1          0
+     method_Join'memberQueue_QUL 1
+                             1          0
+
+  Best Upper Multi-set Bounds
+     Pyramid'Account 1   1`{balance=100.0,id="Deleuze"}++
+1`{balance=145.0,id="Deleuze"}
+     Pyramid'Pyramid 1   1`{master="Spinoza",memberQueue=["Guattari","Simondon","Virilio"],queueFront=0}++
+1`{master="Spinoza",memberQueue=["Guattari","Simondon","Virilio","Deleuze"],queueFront=0}
+     Pyramid'transferTargets 1
+                         1`[]
+     method_Join'Account_PG 1
+                         1`{balance=95.0,id="Deleuze"}
+     method_Join'Balance 1
+                         1`95.0
+     method_Join'Entries 1
+                         1`1
+     method_Join'Entries_GAVC 1
+                         1`1
+     method_Join'Entries_QUL 1
+                         1`100
+     method_Join'Gas 1   1`5.0
+     method_Join'Id 1    1`"Deleuze"
+     method_Join'Id_QUL 1
+                         1`"Deleuze"
+     method_Join'Master 1
+                         1`"Spinoza"
+     method_Join'MemberQueue 1
+                         1`["Guattari","Simondon","Virilio"]
+     method_Join'QueueFront 1
+                         1`0
+     method_Join'QueueFront_QUL 1
+                         1`0
+     method_Join'Value 1 1`150
+     method_Join'Value_SE 1
+                         1`150
+     method_Join'memberQueue_QUL 1
+                         1`["Guattari","Simondon","Virilio","Deleuze"]
+
+  Best Lower Multi-set Bounds
+     Pyramid'Account 1   empty
+     Pyramid'Pyramid 1   empty
+     Pyramid'transferTargets 1
+                         empty
+     method_Join'Account_PG 1
+                         empty
+     method_Join'Balance 1
+                         empty
+     method_Join'Entries 1
+                         empty
+     method_Join'Entries_GAVC 1
+                         empty
+     method_Join'Entries_QUL 1
+                         empty
+     method_Join'Gas 1   empty
+     method_Join'Id 1    empty
+     method_Join'Id_QUL 1
+                         empty
+     method_Join'Master 1
+                         empty
+     method_Join'MemberQueue 1
+                         empty
+     method_Join'QueueFront 1
+                         empty
+     method_Join'QueueFront_QUL 1
+                         empty
+     method_Join'Value 1 empty
+     method_Join'Value_SE 1
+                         empty
+     method_Join'memberQueue_QUL 1
+                         empty
+
+
+ Home Properties
+------------------------------------------------------------------------
+
+  Home Markings
+     [9]
+
+
+ Liveness Properties
+------------------------------------------------------------------------
+
+  Dead Markings
+     [9]
+
+  Dead Transition Instances
+     None
+
+  Live Transition Instances
+     None
+
+
+ Fairness Properties
+------------------------------------------------------------------------
+     No infinite occurrence sequences.
