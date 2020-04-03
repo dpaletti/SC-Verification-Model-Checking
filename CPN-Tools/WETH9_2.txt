@@ -1,0 +1,65 @@
+CPN Tools state space report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/WETH9_2.cpn
+Report generated: Fri Apr  3 10:24:17 2020
+
+
+ Statistics
+------------------------------------------------------------------------
+
+  State Space
+     Nodes:  1
+     Arcs:   0
+     Secs:   0
+     Status: Full
+
+  Scc Graph
+     Nodes:  1
+     Arcs:   0
+     Secs:   0
+
+
+ Boundedness Properties
+------------------------------------------------------------------------
+
+  Best Integer Bounds
+                             Upper      Lower
+     Deposit'DepositValue 1  0          0
+     WETH9'Account 1         0          0
+     WETH9'Weth9 1           0          0
+
+  Best Upper Multi-set Bounds
+     Deposit'DepositValue 1
+                         empty
+     WETH9'Account 1     empty
+     WETH9'Weth9 1       empty
+
+  Best Lower Multi-set Bounds
+     Deposit'DepositValue 1
+                         empty
+     WETH9'Account 1     empty
+     WETH9'Weth9 1       empty
+
+
+ Home Properties
+------------------------------------------------------------------------
+
+  Home Markings
+     All
+
+
+ Liveness Properties
+------------------------------------------------------------------------
+
+  Dead Markings
+     All
+
+  Dead Transition Instances
+     All
+
+  Live Transition Instances
+     None
+
+
+ Fairness Properties
+------------------------------------------------------------------------
+     No infinite occurrence sequences.
