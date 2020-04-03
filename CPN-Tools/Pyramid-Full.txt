@@ -1,0 +1,255 @@
+CPN Tools state space report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid-Full.cpn
+Report generated: Fri Apr  3 07:27:16 2020
+
+
+ Statistics
+------------------------------------------------------------------------
+
+  State Space
+     Nodes:  762
+     Arcs:   1718
+     Secs:   0
+     Status: Full
+
+  Scc Graph
+     Nodes:  762
+     Arcs:   1718
+     Secs:   0
+
+
+ Boundedness Properties
+------------------------------------------------------------------------
+
+  Best Integer Bounds
+                             Upper      Lower
+     PayGas'NotEnoughBalance 1
+                             1          0
+     Pyramid'Account 1       1          0
+     Pyramid'Pyramid 1       1          0
+     Pyramid'transferTargets 1
+                             3          0
+     QueueUpdateLoop'EntryToAdd 1
+                             1          0
+     QueueUpdateLoop'NewIteration 1
+                             1          0
+     QueueUpdateLoop'NewIteration_TA 1
+                             1          0
+     QueueUpdateLoop'TargetAddress 1
+                             1          0
+     QueueUpdateLoop'UpdatedQueue 1
+                             1          0
+     QueueUpdateLoop'UpdatedQueue_TA 1
+                             1          0
+     SetEntry'EntryToCap 1   1          0
+     method_Join'Account_PG 1
+                             1          0
+     method_Join'Balance 1   1          0
+     method_Join'Entries 1   2          0
+     method_Join'Entries_GAVC 1
+                             1          0
+     method_Join'Entries_QUL 1
+                             1          0
+     method_Join'Gas 1       3          0
+     method_Join'Id 1        1          0
+     method_Join'Id_QUL 1    1          0
+     method_Join'Master 1    1          0
+     method_Join'MemberQueue 1
+                             1          0
+     method_Join'QueueFront 1
+                             1          0
+     method_Join'QueueFront_QUL 1
+                             1          0
+     method_Join'Value 1     2          0
+     method_Join'Value_SE 1  2          0
+     method_Join'memberQueue_QUL 1
+                             1          0
+
+  Best Upper Multi-set Bounds
+     PayGas'NotEnoughBalance 1
+                         1`{balance=100.0,id="Deleuze"}++
+1`{balance=247.0,id="Deleuze"}++
+1`{balance=248.0,id="Deleuze"}++
+1`{balance=447.0,id="Deleuze"}++
+1`{balance=448.0,id="Deleuze"}++
+1`{balance=595.0,id="Deleuze"}
+     Pyramid'Account 1   1`{balance=100.0,id="Deleuze"}++
+1`{balance=247.0,id="Deleuze"}++
+1`{balance=248.0,id="Deleuze"}++
+1`{balance=447.0,id="Deleuze"}++
+1`{balance=448.0,id="Deleuze"}++
+1`{balance=595.0,id="Deleuze"}
+     Pyramid'Pyramid 1   1`{master="Spinoza",memberQueue=["Guattari","Simondon"],queueFront=0}++
+1`{master="Spinoza",memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1}++
+1`{master="Spinoza",memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=2}++
+1`{master="Spinoza",memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=3}
+     Pyramid'transferTargets 1
+                         1`"Deleuze"++
+1`"Guattari"++
+1`"Simondon"
+     QueueUpdateLoop'EntryToAdd 1
+                         1`{memberQueue=["Guattari","Simondon"],queueFront=0,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon"],queueFront=0,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=1,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=0}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=0}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=3,sender="Deleuze",entries=0}
+     QueueUpdateLoop'NewIteration 1
+                         1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=2}
+     QueueUpdateLoop'NewIteration_TA 1
+                         1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=1}
+     QueueUpdateLoop'TargetAddress 1
+                         1`"Deleuze"++
+1`"Guattari"++
+1`"Simondon"
+     QueueUpdateLoop'UpdatedQueue 1
+                         1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=1}
+     QueueUpdateLoop'UpdatedQueue_TA 1
+                         1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=2}++
+1`{memberQueue=["Guattari","Simondon","Deleuze"],queueFront=0,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=1}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze"],queueFront=1,sender="Deleuze",entries=3}++
+1`{memberQueue=["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"],queueFront=2,sender="Deleuze",entries=1}
+     SetEntry'EntryToCap 1
+                         1`4
+     method_Join'Account_PG 1
+                         1`{balance=50.0,id="Deleuze"}++
+1`{balance=197.0,id="Deleuze"}++
+1`{balance=198.0,id="Deleuze"}++
+1`{balance=397.0,id="Deleuze"}++
+1`{balance=398.0,id="Deleuze"}
+     method_Join'Balance 1
+                         1`50.0++
+1`197.0++
+1`198.0++
+1`397.0++
+1`398.0
+     method_Join'Entries 1
+                         1`2++
+1`3
+     method_Join'Entries_GAVC 1
+                         1`2++
+1`3
+     method_Join'Entries_QUL 1
+                         1`2++
+1`3
+     method_Join'Gas 1   2`50.0++
+1`1000.0
+     method_Join'Id 1    1`"Deleuze"
+     method_Join'Id_QUL 1
+                         1`"Deleuze"
+     method_Join'Master 1
+                         1`"Spinoza"
+     method_Join'MemberQueue 1
+                         1`["Guattari","Simondon"]++
+1`["Guattari","Simondon","Deleuze","Deleuze"]++
+1`["Guattari","Simondon","Deleuze","Deleuze","Deleuze"]
+     method_Join'QueueFront 1
+                         1`0++
+1`1++
+1`2
+     method_Join'QueueFront_QUL 1
+                         1`1++
+1`2++
+1`3
+     method_Join'Value 1 1`200++
+1`400
+     method_Join'Value_SE 1
+                         1`200++
+1`400
+     method_Join'memberQueue_QUL 1
+                         1`["Guattari","Simondon","Deleuze","Deleuze"]++
+1`["Guattari","Simondon","Deleuze","Deleuze","Deleuze"]++
+1`["Guattari","Simondon","Deleuze","Deleuze","Deleuze","Deleuze","Deleuze"]
+
+  Best Lower Multi-set Bounds
+     PayGas'NotEnoughBalance 1
+                         empty
+     Pyramid'Account 1   empty
+     Pyramid'Pyramid 1   empty
+     Pyramid'transferTargets 1
+                         empty
+     QueueUpdateLoop'EntryToAdd 1
+                         empty
+     QueueUpdateLoop'NewIteration 1
+                         empty
+     QueueUpdateLoop'NewIteration_TA 1
+                         empty
+     QueueUpdateLoop'TargetAddress 1
+                         empty
+     QueueUpdateLoop'UpdatedQueue 1
+                         empty
+     QueueUpdateLoop'UpdatedQueue_TA 1
+                         empty
+     SetEntry'EntryToCap 1
+                         empty
+     method_Join'Account_PG 1
+                         empty
+     method_Join'Balance 1
+                         empty
+     method_Join'Entries 1
+                         empty
+     method_Join'Entries_GAVC 1
+                         empty
+     method_Join'Entries_QUL 1
+                         empty
+     method_Join'Gas 1   empty
+     method_Join'Id 1    empty
+     method_Join'Id_QUL 1
+                         empty
+     method_Join'Master 1
+                         empty
+     method_Join'MemberQueue 1
+                         empty
+     method_Join'QueueFront 1
+                         empty
+     method_Join'QueueFront_QUL 1
+                         empty
+     method_Join'Value 1 empty
+     method_Join'Value_SE 1
+                         empty
+     method_Join'memberQueue_QUL 1
+                         empty
+
+
+ Home Properties
+------------------------------------------------------------------------
+
+  Home Markings
+     [762]
+
+
+ Liveness Properties
+------------------------------------------------------------------------
+
+  Dead Markings
+     [762]
+
+  Dead Transition Instances
+     None
+
+  Live Transition Instances
+     None
+
+
+ Fairness Properties
+------------------------------------------------------------------------
+     No infinite occurrence sequences.

@@ -1,0 +1,6 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid-Full.cpn
+Report generated: Fri Apr  3 04:38:59 2020
+
+1	0	SetEntry @ (1:SetEntry)
+ - value = 150

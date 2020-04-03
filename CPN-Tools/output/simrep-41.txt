@@ -1,0 +1,12 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/Pyramid-Full.cpn
+Report generated: Fri Apr  3 06:56:39 2020
+
+1	0	PayGas @ (1:PayGas)
+ - account = {balance=100.0,id="Deleuze"}
+ - gas = 1000.0
+2	0	GasException @ (1:PayGas)
+ - account = {balance=100.0,id="Deleuze"}
+3	0	PayGas @ (1:PayGas)
+ - account = {balance=100.0,id="Deleuze"}
+ - gas = 50.0
