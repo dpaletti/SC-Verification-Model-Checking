@@ -1,20 +1,20 @@
 CPN Tools state space report for:
 /cygdrive/C/Users/User/Desktop/SC-Verification-Model-Checking/SC-Verification-Model-Checking/CPN-Tools/WETH9_2.cpn
-Report generated: Fri Apr  3 10:24:17 2020
+Report generated: Sat Apr  4 11:48:49 2020
 
 
  Statistics
 ------------------------------------------------------------------------
 
   State Space
-     Nodes:  1
-     Arcs:   0
+     Nodes:  42
+     Arcs:   58
      Secs:   0
      Status: Full
 
   Scc Graph
-     Nodes:  1
-     Arcs:   0
+     Nodes:  42
+     Arcs:   58
      Secs:   0
 
 
@@ -23,38 +23,139 @@ Report generated: Fri Apr  3 10:24:17 2020
 
   Best Integer Bounds
                              Upper      Lower
-     Deposit'DepositValue 1  0          0
-     WETH9'Account 1         0          0
-     WETH9'Weth9 1           0          0
+     Approve'Guy 1           1          0
+     Approve'Wad 1           1          0
+     Deposit'DepositValue 1  1          0
+     TransferFrom'Account_CAT 1
+                             1          0
+     TransferFrom'Account_RSTB 1
+                             1          0
+     TransferFrom'Dst 1      1          0
+     TransferFrom'Dst_CAT 1  1          0
+     TransferFrom'Src 1      1          0
+     TransferFrom'Src_CAT 1  1          0
+     TransferFrom'Wad 1      1          0
+     TransferFrom'Wad_CAT 1  1          0
+     TransferFrom'Wad_RSTB 1 1          0
+     TransferFrom'Weth9_CAT 1
+                             1          0
+     TransferFrom'Weth9_RSTB 1
+                             1          0
+     WETH9'Account 1         1          0
+     WETH9'Weth9 1           1          0
+     Withdraw'InsufficientBalance 1
+                             1          0
+     Withdraw'SufficientBalance 1
+                             1          0
+     Withdraw'Wad 1          1          0
+     Withdraw'WethToBurn 1   1          0
 
   Best Upper Multi-set Bounds
+     Approve'Guy 1       1`"Guattari"
+     Approve'Wad 1       1`10
      Deposit'DepositValue 1
-                         empty
-     WETH9'Account 1     empty
-     WETH9'Weth9 1       empty
+                         1`20
+     TransferFrom'Account_CAT 1
+                         1`{balance=100.0,address="Deleuze"}
+     TransferFrom'Account_RSTB 1
+                         1`{balance=100.0,address="Deleuze"}
+     TransferFrom'Dst 1  1`"Guattari"
+     TransferFrom'Dst_CAT 1
+                         1`"Guattari"
+     TransferFrom'Src 1  1`"Deleuze"
+     TransferFrom'Src_CAT 1
+                         1`"Deleuze"
+     TransferFrom'Wad 1  1`30
+     TransferFrom'Wad_CAT 1
+                         1`30
+     TransferFrom'Wad_RSTB 1
+                         1`30
+     TransferFrom'Weth9_CAT 1
+                         1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}
+     TransferFrom'Weth9_RSTB 1
+                         1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}
+     WETH9'Account 1     1`{balance=80.0,address="Deleuze"}++
+1`{balance=90.0,address="Deleuze"}++
+1`{balance=100.0,address="Deleuze"}++
+1`{balance=110.0,address="Deleuze"}
+     WETH9'Weth9 1       1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=(~10)},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=(~10)},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=0},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=(~10)},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=(~10)},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=0},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=100}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=130}]}++
+1`{allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}
+     Withdraw'InsufficientBalance 1
+                         1`{account={balance=100.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=0},{address="Guattari",balance=130}]}}++
+1`{account={balance=100.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=0},{address="Guattari",balance=130}]}}
+     Withdraw'SufficientBalance 1
+                         1`{account={balance=80.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=100}]}}++
+1`{account={balance=80.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=130}]}}++
+1`{account={balance=80.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=100}]}}++
+1`{account={balance=80.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=20},{address="Guattari",balance=130}]}}++
+1`{account={balance=100.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=0}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}}++
+1`{account={balance=100.0,address="Deleuze"},weth9={allowance=[{allower="Guattari",allowed=[{address="Deleuze",value=50}]},{allower="Deleuze",allowed=[{address="Guattari",value=10}]}],balanceOf=[{address="Deleuze",balance=30},{address="Guattari",balance=100}]}}
+     Withdraw'Wad 1      1`10
+     Withdraw'WethToBurn 1
+                         1`10
 
   Best Lower Multi-set Bounds
+     Approve'Guy 1       empty
+     Approve'Wad 1       empty
      Deposit'DepositValue 1
+                         empty
+     TransferFrom'Account_CAT 1
+                         empty
+     TransferFrom'Account_RSTB 1
+                         empty
+     TransferFrom'Dst 1  empty
+     TransferFrom'Dst_CAT 1
+                         empty
+     TransferFrom'Src 1  empty
+     TransferFrom'Src_CAT 1
+                         empty
+     TransferFrom'Wad 1  empty
+     TransferFrom'Wad_CAT 1
+                         empty
+     TransferFrom'Wad_RSTB 1
+                         empty
+     TransferFrom'Weth9_CAT 1
+                         empty
+     TransferFrom'Weth9_RSTB 1
                          empty
      WETH9'Account 1     empty
      WETH9'Weth9 1       empty
+     Withdraw'InsufficientBalance 1
+                         empty
+     Withdraw'SufficientBalance 1
+                         empty
+     Withdraw'Wad 1      empty
+     Withdraw'WethToBurn 1
+                         empty
 
 
  Home Properties
 ------------------------------------------------------------------------
 
   Home Markings
-     All
+     None
 
 
  Liveness Properties
 ------------------------------------------------------------------------
 
   Dead Markings
-     All
+     [31,32,41,42]
 
   Dead Transition Instances
-     All
+     None
 
   Live Transition Instances
      None
